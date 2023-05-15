@@ -133,7 +133,7 @@ function CMISample() {
       doc.setData(data);
       doc.render();
       const updatedDocx = doc.getZip().generate({ type: "blob" });
-      FileSaver.saveAs(updatedDocx, `${currentDate} ${selectedFile.name.split(".")[0]}.docx`);
+      FileSaver.saveAs(updatedDocx, `${currentDate} ${data.Keyword}.docx`);
     };
   }
 
