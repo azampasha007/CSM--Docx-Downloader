@@ -52,6 +52,8 @@ function CMISample() {
   const [toYear, setToYear] = useState("");
   const [baseYear, setBaseYear] = useState("");
   const [keyword, setKeyword] = useState("");
+  const [inputValue, setInputValue] = useState('');
+  const [words, setWords] = useState([]);
   // const [uploadedImages, setUploadedImages] = useState([]);
 
   // useEffect(()=>{
@@ -121,6 +123,9 @@ function CMISample() {
       RC: menu.map((m) => ({
         RegionName: m.text,
         Country: m.submenu.map((c) => ({ CountryName: c.text })),
+      })),
+      Company: words.map((company) => ({
+        CompanyName: company,
       })),
     };
 
@@ -202,6 +207,14 @@ function CMISample() {
     localStorage.removeItem("user");
     navigate("/login");
   }
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setInputValue(value);
+
+    const newWords = value.split(/[\s,\n]+/); // Split by whitespace, comma, or new line
+    setWords(newWords);
+  };
 
   const isDisabled = !(revenue && fromYear && toYear && baseYear && keyword && (isGlobal || isNordic));
 
@@ -367,7 +380,9 @@ function CMISample() {
         <Grid item container>
           <Grid item>
             <InputLabel>Countries*</InputLabel>
-            <Textarea placeholder="(One at a line OR Coma seprated)" sx={{ width: "500px", minHeight: "200px" }} />
+            <Textarea placeholder="(One at a line OR Coma seprated)" sx={{ width: "500px", minHeight: "200px" }} 
+            value={inputValue} onChange={handleInputChange} 
+            />
           </Grid>
         </Grid>
         {/* <Grid item>
